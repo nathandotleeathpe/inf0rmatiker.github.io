@@ -2,7 +2,7 @@ name: Tagged Release
 on:
   release:
     types:
-      - publish
+      - published
 
 jobs:
   build:
