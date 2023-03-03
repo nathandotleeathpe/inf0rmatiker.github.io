@@ -32,7 +32,5 @@ jobs:
           git remote add origin "${remote_repo}"
 
       - name: mike Deploy Main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mike deploy --push dev
