@@ -29,6 +29,5 @@ jobs:
       - name: mike Deploy Main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_DOMAIN: github.hpe.com
         run: |
           mike deploy --push dev
