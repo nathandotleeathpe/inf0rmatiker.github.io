@@ -23,7 +23,7 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --local user.name $GITHUB_ACTOR
+          git config --local user.name ${{ GITHUB_ACTOR }}
 
       - name: mike Deploy Main
         env:
