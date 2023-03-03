@@ -27,10 +27,9 @@ jobs:
         run: |
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.${GITHUB_DOMAIN:-"github.com"}"
-          git remote rm origin
-          remote_repo="https://x-access-token:${GITHUB_TOKEN}@${GITHUB_DOMAIN:-"github.com"}/${GITHUB_REPOSITORY}.git"
-          git remote add origin "${remote_repo}"
 
       - name: mike Deploy Main
+        env:
+          GITHUB_TOKEN: ${{ GITHUB_TOKEN }}
         run: |
-          mike deploy --push --force dev
+          mike deploy --push dev

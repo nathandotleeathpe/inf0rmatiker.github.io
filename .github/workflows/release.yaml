@@ -26,12 +26,10 @@ jobs:
         run: |
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.${GITHUB_DOMAIN:-"github.com"}"
-          git remote rm origin
-          remote_repo="https://x-access-token:${GITHUB_TOKEN}@${GITHUB_DOMAIN:-"github.com"}/${GITHUB_REPOSITORY}.git"
-          git remote add origin "${remote_repo}"
       - name: mike Deploy Main
         env:
           VERSION: ${{ github.event.release.tag_name }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mike deploy --push --update-aliases "$VERSION" "latest"
           mike set-default --push latest
