@@ -23,8 +23,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --local user.name $GITHUB_ACTOR
-          echo $GITHUB_ACTOR
+          git config --local user.name "Git Actions Bot"
+          git config --local user.email "bot@github.com"
 
       - name: mike Deploy Main
         env:
