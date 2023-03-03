@@ -30,6 +30,6 @@ jobs:
 
       - name: mike Deploy Main
         env:
-          GITHUB_TOKEN: ${{ GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mike deploy --push dev
