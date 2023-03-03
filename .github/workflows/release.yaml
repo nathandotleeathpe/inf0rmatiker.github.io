@@ -1,0 +1,35 @@
+name: Release Docs
+on:
+  release:
+    types:
+      - publish
+
+jobs:
+  build:
+    name: Publish Development Documentation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+
+      - name: Install Dependencies
+        run: |
+          pip install --disable-pip-version-check -r mkdocs_requirements.txt
+      - name: Configure Git
+        run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.${GITHUB_DOMAIN:-"github.com"}"
+          git remote rm origin
+          remote_repo="https://x-access-token:${GITHUB_TOKEN}@${GITHUB_DOMAIN:-"github.com"}/${GITHUB_REPOSITORY}.git"
+          git remote add origin "${remote_repo}"
+      - name: mike Deploy Main
+        run: |
+          mike deploy --push --update-aliases "$VERSION" "latest"
+          mike set-default --push latest
