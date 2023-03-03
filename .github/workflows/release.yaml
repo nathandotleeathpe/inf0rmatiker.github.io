@@ -30,6 +30,8 @@ jobs:
           remote_repo="https://x-access-token:${GITHUB_TOKEN}@${GITHUB_DOMAIN:-"github.com"}/${GITHUB_REPOSITORY}.git"
           git remote add origin "${remote_repo}"
       - name: mike Deploy Main
+        env:
+          VERSION: ${{ github.event.release.tag_name }}
         run: |
           mike deploy --push --update-aliases "$VERSION" "latest"
           mike set-default --push latest
