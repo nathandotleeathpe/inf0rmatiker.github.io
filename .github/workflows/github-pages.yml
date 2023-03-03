@@ -1,4 +1,4 @@
-name: Publish docs via GitHub Pages
+name: Release Docs
 on:
   push:
     branches:
@@ -6,15 +6,28 @@ on:
 
 jobs:
   build:
-    name: Deploy docs
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    name: Publish Development Documentation
+    runs-on: ubuntu
     steps:
-      - name: Checkout master
-        uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      - name: Deploy docs
-        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+      - name: Set up Python
+        uses: actions/setup-python@v3
+
+      - name: Install Dependencies
+        run: |
+          pip install --disable-pip-version-check -r mkdocs_requirements.txt
+
+      - name: Configure Git
+        run: |
+          git config --local user.name $GITHUB_ACTOR
+
+      - name: mike Deploy Main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_DOMAIN: github.hpe.com
+        run: |
+          mike deploy --push dev
