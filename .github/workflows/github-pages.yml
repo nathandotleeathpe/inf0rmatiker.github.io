@@ -23,10 +23,10 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --local user.name "Git Actions Bot"
-          git config --local user.email "bot@github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.${GITHUB_DOMAIN:-"github.com"}"
           git remote rm origin
-          remote_repo="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          remote_repo="https://x-access-token:${GITHUB_TOKEN}@${GITHUB_DOMAIN:-"github.com"}/${GITHUB_REPOSITORY}.git"
           git remote add origin "${remote_repo}"
 
       - name: mike Deploy Main
