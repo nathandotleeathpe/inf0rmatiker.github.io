@@ -33,4 +33,4 @@ jobs:
 
       - name: mike Deploy Main
         run: |
-          mike deploy --push --rebase dev
+          mike deploy --push --force dev
